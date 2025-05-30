@@ -1,191 +1,264 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Jogo da Memória</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #ffe6f0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 20px;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Jogo da Memória</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #ffe6f0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  h1 {
+    color: #ff6fa1;
+  }
+  #game-board {
+    width: 480px;
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 30px;
+  }
+  .card {
+    background: #ff9ccf;
+    border-radius: 15px;
+    cursor: pointer;
+    position: relative;
+    width: 100%;
+    padding-top: 100%; /* quadrado */
+    perspective: 1000px;
+  }
+  .card-inner {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.5s;
+    transform-style: preserve-3d;
+    border-radius: 15px;
+  }
+  .card.flipped .card-inner {
+    transform: rotateY(180deg);
+  }
+  .card-front,
+  .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
+    backface-visibility: hidden;
+  }
+  .card-front {
+    background: #fff url('imagens/verso-carta.png') center center no-repeat;
+    background-size: cover;
+  }
+  .card-back {
+    background: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: rotateY(180deg);
+  }
+  .card-back img {
+    max-width: 80%;
+    max-height: 80%;
+    border-radius: 10px;
+  }
+  #win-message {
+    margin-top: 30px;
+    font-size: 24px;
+    color: #d4005f;
+    display: none;
+  }
+  #reaction {
+    margin-top: 20px;
+    width: 320px;
+    height: 180px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  #reaction img {
+    position: absolute;
+    max-height: 100%;
+    border-radius: 15px;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+  }
+  #yasmin {
+    left: 10px;
+    width: 140px;
+    z-index: 2;
+  }
+  #namorado {
+    right: 10px;
+    width: 140px;
+    z-index: 1;
+  }
 
-    h1 {
-      color: #ff6fa1;
-    }
+  /* Animação de beijinho - balançar leve */
+  @keyframes beijinho {
+    0%, 100% { transform: translateX(0); opacity: 1; }
+    50% { transform: translateX(15px); opacity: 0.8; }
+  }
+  /* Animação de batidinha - vai e volta rápido */
+  @keyframes batidinha {
+    0%, 100% { transform: translateX(0); opacity: 1; }
+    25% { transform: translateX(-10px); }
+    50% { transform: translateX(10px); }
+    75% { transform: translateX(-10px); }
+  }
 
-    #game-board {
-      width: 480px;
-      max-width: 100%;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-      margin-top: 30px;
-    }
-
-    .card {
-      background: #ff9ccf;
-      border-radius: 15px;
-      cursor: pointer;
-      position: relative;
-      width: 100%;
-      padding-top: 100%; /* quadrado */
-      perspective: 1000px;
-    }
-
-    .card-inner {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      transition: transform 0.5s;
-      transform-style: preserve-3d;
-      border-radius: 15px;
-    }
-
-    .card.flipped .card-inner {
-      transform: rotateY(180deg);
-    }
-
-    .card-front,
-    .card-back {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 15px;
-      backface-visibility: hidden;
-    }
-
-    .card-front {
-      background: #ff9ccf url('imagens/verso-carta.png') center center no-repeat;
-      background-size: 50%;
-    }
-
-    .card-back {
-      background: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      transform: rotateY(180deg);
-    }
-
-    .card-back img {
-      max-width: 80%;
-      max-height: 80%;
-      border-radius: 10px;
-    }
-
-    #win-message {
-      margin-top: 30px;
-      font-size: 24px;
-      color: #d4005f;
-      display: none;
-    }
-  </style>
+  /* Classe para ativar animação beijinho */
+  .beijinho {
+    animation: beijinho 1.2s ease forwards;
+    opacity: 1 !important;
+  }
+  /* Classe para ativar animação batidinha */
+  .batidinha {
+    animation: batidinha 1.2s ease forwards;
+    opacity: 1 !important;
+  }
+</style>
 </head>
 <body>
 
-  <h1>Jogo da Memória</h1>
-  <div id="game-board"></div>
-  <div id="win-message">Você ganhou! ❤️</div>
+<h1>Jogo da Memória</h1>
+<div id="game-board"></div>
+<div id="win-message">Você ganhou! ❤️</div>
 
-  <script>
-    const images = [
-      'imagens/img1.png',
-      'imagens/img2.png',
-      'imagens/img3.png',
-      'imagens/img4.png',
-      'imagens/img5.png',
-      'imagens/img6.png'
-    ];
+<div id="reaction">
+  <img id="yasmin" src="" alt="Yasmin" />
+  <img id="namorado" src="" alt="Namorado" />
+</div>
 
-    const gameBoard = document.getElementById('game-board');
-    const winMessage = document.getElementById('win-message');
+<script>
+  const images = [
+    'imagens/img1.png',
+    'imagens/img2.png',
+    'imagens/img3.png',
+    'imagens/img4.png',
+    'imagens/img5.png',
+    'imagens/img6.png'
+  ];
 
-    let cards = [];
-    let flippedCards = [];
-    let matchedCount = 0;
-    let lockBoard = false;
+  const gameBoard = document.getElementById('game-board');
+  const winMessage = document.getElementById('win-message');
+  const yasminImg = document.getElementById('yasmin');
+  const namoradoImg = document.getElementById('namorado');
 
-    function shuffle(array) {
-      for (let i = array.length - 1; i > 0; i--) {
-        let j = Math.floor(Math.random() * (i + 1));
-        [array[i], array[j]] = [array[j], array[i]];
+  let cards = [];
+  let flippedCards = [];
+  let matchedCount = 0;
+  let lockBoard = false;
+
+  function shuffle(array) {
+    for (let i = array.length -1; i > 0; i--) {
+      let j = Math.floor(Math.random() * (i+1));
+      [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+  }
+
+  function createCards() {
+    const doubleImages = images.concat(images);
+    shuffle(doubleImages);
+    
+    doubleImages.forEach((src) => {
+      const card = document.createElement('div');
+      card.classList.add('card');
+      card.dataset.image = src;
+
+      const cardInner = document.createElement('div');
+      cardInner.classList.add('card-inner');
+
+      const cardFront = document.createElement('div');
+      cardFront.classList.add('card-front');
+
+      const cardBack = document.createElement('div');
+      cardBack.classList.add('card-back');
+      const img = document.createElement('img');
+      img.src = src;
+      cardBack.appendChild(img);
+
+      cardInner.appendChild(cardFront);
+      cardInner.appendChild(cardBack);
+      card.appendChild(cardInner);
+
+      card.addEventListener('click', () => flipCard(card));
+      gameBoard.appendChild(card);
+    });
+  }
+
+  function flipCard(card) {
+    if (lockBoard || card.classList.contains('flipped') || flippedCards.length === 2) return;
+
+    card.classList.add('flipped');
+    flippedCards.push(card);
+
+    if (flippedCards.length === 2) {
+      checkMatch();
+    }
+  }
+
+  function checkMatch() {
+    const [card1, card2] = flippedCards;
+    const isMatch = card1.dataset.image === card2.dataset.image;
+    lockBoard = true;
+
+    if (isMatch) {
+      showReaction('acertou');
+      matchedCount++;
+      flippedCards = [];
+      lockBoard = false;
+
+      if (matchedCount === images.length) {
+        winMessage.style.display = 'block';
       }
-      return array;
-    }
-
-    function createCards() {
-      const doubleImages = images.concat(images);
-      shuffle(doubleImages);
-
-      doubleImages.forEach((src, index) => {
-        const card = document.createElement('div');
-        card.classList.add('card');
-        card.dataset.image = src;
-
-        const cardInner = document.createElement('div');
-        cardInner.classList.add('card-inner');
-
-        const cardFront = document.createElement('div');
-        cardFront.classList.add('card-front');
-
-        const cardBack = document.createElement('div');
-        cardBack.classList.add('card-back');
-        const img = document.createElement('img');
-        img.src = src;
-        img.alt = 'Imagem do jogo';
-        cardBack.appendChild(img);
-
-        cardInner.appendChild(cardFront);
-        cardInner.appendChild(cardBack);
-        card.appendChild(cardInner);
-
-        card.addEventListener('click', () => flipCard(card));
-
-        gameBoard.appendChild(card);
-        cards.push(card);
-      });
-    }
-
-    function flipCard(card) {
-      if (lockBoard) return;
-      if (flippedCards.includes(card)) return;
-
-      card.classList.add('flipped');
-      flippedCards.push(card);
-
-      if (flippedCards.length === 2) {
-        checkMatch();
-      }
-    }
-
-    function checkMatch() {
-      lockBoard = true;
-      const [card1, card2] = flippedCards;
-      if (card1.dataset.image === card2.dataset.image) {
-        matchedCount += 2;
+    } else {
+      showReaction('errou');
+      setTimeout(() => {
+        card1.classList.remove('flipped');
+        card2.classList.remove('flipped');
         flippedCards = [];
         lockBoard = false;
+      }, 1000);
+    }
+  }
 
-        if (matchedCount === cards.length) {
-          winMessage.style.display = 'block';
-        }
-      } else {
-        setTimeout(() => {
-          card1.classList.remove('flipped');
-          card2.classList.remove('flipped');
-          flippedCards = [];
-          lockBoard = false;
-        }, 1200);
-      }
+  function showReaction(type) {
+    if(type === 'acertou') {
+      // Yasmin beijinho, namorado feliz
+      yasminImg.src = 'imagens/yasmin-emocao1.png';
+      namoradoImg.src = 'imagens/namorado-emocao1.png';
+
+      yasminImg.classList.remove('batidinha');
+      namoradoImg.classList.remove('batidinha');
+      yasminImg.classList.add('beijinho');
+      namoradoImg.classList.add('beijinho');
+
+    } else {
+      // Yasmin batidinha, namorado triste
+      yasminImg.src = 'imagens/yasmin-emocao2.png';
+      namoradoImg.src = 'imagens/namorado-emocao2.png';
+
+      yasminImg.classList.remove('beijinho');
+      namoradoImg.classList.remove('beijinho');
+      yasminImg.classList.add('batidinha');
+      namoradoImg.classList.add('batidinha');
     }
 
-    createCards();
-  </script>
+    // Mostrar imagens
+    yasminImg.style.opacity = '1';
+    namoradoImg.style.opacity = '1';
 
-</body>
-</html>
+    // Depois de 1.2s, esconder as imagens e remover classes de animação
+    setTimeout(() => {
+      yasminImg.style.opacity = '0';
+      namoradoImg.style.opacity = '0';
+      yasminImg.classList

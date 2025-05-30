@@ -1,71 +1,56 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Minha Cartinha 💌</title>
-  <link href="https://fonts.googleapis.com/css2?family=Handlee&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>Menu do Amor</title>
   <style>
     body {
-      margin: 0;
-      padding: 0;
-      background-color: #fff0f5;
-      font-family: 'Handlee', cursive;
+      background: #fff0f5;
+      font-family: 'Segoe UI', sans-serif;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      height: 100vh;
-    }
-
-    .envelope {
-      background: white;
-      border: 3px dashed #d6336c;
-      padding: 40px;
-      border-radius: 20px;
-      box-shadow: 0 0 20px #ffb6c1;
-      max-width: 90%;
-      text-align: center;
+      min-height: 100vh;
+      margin: 0;
     }
 
     h1 {
-      font-size: 2em;
       color: #d6336c;
+      margin-bottom: 40px;
     }
 
-    p {
-      font-size: 1.2em;
-      color: #333;
-      margin: 20px 0;
+    .menu {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
     }
 
-    .btn-prosseguir {
-      background-color: #d6336c;
+    .botao {
+      padding: 15px 30px;
+      background-color: #ff6699;
       color: white;
-      padding: 12px 24px;
-      font-size: 1em;
       border: none;
-      border-radius: 10px;
+      border-radius: 15px;
+      font-size: 1.2em;
       cursor: pointer;
       transition: background 0.3s;
-      text-decoration: none;
     }
 
-    .btn-prosseguir:hover {
-      background-color: #a02050;
+    .botao:hover {
+      background-color: #cc3366;
     }
   </style>
 </head>
 <body>
-  <div class="envelope">
-    <h1>Para o amor da minha vida 💖</h1>
-    <p>
-      Oi, meu amor! 💌<br><br>
-      Preparei algo muito especial pra você...<br>
-      Um cantinho cheio de lembranças, músicas e surpresas.<br><br>
-      Clica no botão abaixo pra começar essa viagem com a gente 💕
-    </p>
-    <a class="btn-prosseguir" href="home/index.html">Prosseguir</a>
+
+  <h1>Escolha o que você quer ver 💖</h1>
+
+  <div class="menu">
+    <button class="botao" onclick="window.location.href='jogo.html'">Jogo da Memória</button>
+    <button class="botao" onclick="window.location.href='linha.html'">Linha do Tempo</button>
+    <button class="botao" onclick="window.location.href='musicas.html'">Músicas</button>
   </div>
+
 </body>
 </html>

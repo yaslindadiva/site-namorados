@@ -2,105 +2,59 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Linha do Tempo</title>
   <style>
     body {
-      background-color: #fff0f5;
-      font-family: 'Arial', sans-serif;
-      margin: 0;
-      padding: 0;
-      color: #333;
-    }
-
-    header {
-      background-color: #ffc0cb;
-      padding: 20px;
+      font-family: Arial, sans-serif;
+      background-color: #fff0f6;
       text-align: center;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      padding: 30px;
     }
-
-    header h1 {
-      margin: 0;
-      font-size: 2.5em;
-      color: #d63384;
+    h1 {
+      color: #d6336c;
+      font-size: 2.5rem;
+      margin-bottom: 40px;
     }
-
-    .timeline {
-      max-width: 800px;
-      margin: 40px auto;
-      padding: 0 20px;
+    .evento {
+      margin-bottom: 40px;
     }
-
-    .event {
-      background-color: #ffe6f0;
-      border-left: 5px solid #d63384;
-      padding: 20px;
-      margin: 20px 0;
+    .evento img {
+      max-width: 80%;
+      height: auto;
       border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-      display: flex;
-      align-items: center;
-      gap: 20px;
+      box-shadow: 0 4px 8px rgba(214, 51, 108, 0.3);
     }
-
-    .event h2 {
-      margin: 0;
-      color: #d63384;
-      font-size: 1.4em;
-    }
-
-    .event img {
-      max-width: 120px;
-      border-radius: 10px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    }
-
-    .back-btn {
-      display: block;
-      margin: 40px auto;
-      text-align: center;
-      padding: 12px 24px;
-      background-color: #d63384;
-      color: white;
-      border-radius: 10px;
-      text-decoration: none;
-      font-weight: bold;
-      width: fit-content;
-    }
-
-    .back-btn:hover {
-      background-color: #b82e6e;
+    .evento h2 {
+      color: #a3004f;
+      margin-top: 15px;
+      font-size: 1.8rem;
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1>🌹 Nossa Linha do Tempo 🌹</h1>
-  </header>
 
-  <div class="timeline">
-    <div class="event">
-      <img src="imagens/imagem1-linha do tempo.png" alt="Primeira vez segurando as mãos">
-      <h2>🤝 Primeira vez segurando as mãos</h2>
-    </div>
+  <h1>Linha do Tempo</h1>
 
-    <div class="event">
-      <img src="imagens/imagem2-linha do tempo.png" alt="Primeiro beijo">
-      <h2>💋 Primeiro beijo</h2>
-    </div>
-
-    <div class="event">
-      <img src="imagens/imagem3-linha do tempo.png" alt="Primeiro encontro">
-      <h2>🎉 Primeiro encontro</h2>
-    </div>
-
-    <div class="event">
-      <img src="imagens/imagem4-linha do tempo.png" alt="Primeiro eu te amo">
-      <h2>💌 Primeiro “eu te amo”</h2>
-    </div>
+  <div class="evento">
+    <img src="imagens/imagem1-linhadotempo.png" alt="Primeira vez segurando as mãos" />
+    <h2>Primeira vez segurando as mãos</h2>
   </div>
 
-  <a class="back-btn" href="musicas.html">🎵 Voltar para as músicas</a>
+  <div class="evento">
+    <img src="imagens/imagem2-linhadotempo.png" alt="Primeiro beijo" />
+    <h2>Primeiro beijo</h2>
+  </div>
+
+  <div class="evento">
+    <img src="imagens/imagem3-linhadotempo.png" alt="Primeiro encontro" />
+    <h2>Primeiro encontro</h2>
+  </div>
+
+  <div class="evento">
+    <img src="imagens/imagem4-linhadotempo.png" alt="Primeiro te amo" />
+    <h2>Primeiro te amo</h2>
+  </div>
+
 </body>
 </html>

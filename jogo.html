@@ -25,13 +25,12 @@
     margin-top: 30px;
   }
   .card {
-    background: #ff9ccf;
-    border-radius: 15px;
-    cursor: pointer;
-    position: relative;
     width: 100%;
-    padding-top: 100%; /* quadrado */
+    padding-top: 100%;
+    position: relative;
     perspective: 1000px;
+    cursor: pointer;
+    border-radius: 15px;
   }
   .card-inner {
     position: absolute;
@@ -44,8 +43,7 @@
   .card.flipped .card-inner {
     transform: rotateY(180deg);
   }
-  .card-front,
-  .card-back {
+  .card-front, .card-back {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -53,7 +51,7 @@
     backface-visibility: hidden;
   }
   .card-front {
-    background: #fff url('imagens/verso-carta.png') center center no-repeat;
+    background: url('imagens/verso-carta.png') center center no-repeat;
     background-size: cover;
   }
   .card-back {
@@ -68,61 +66,28 @@
     max-height: 80%;
     border-radius: 10px;
   }
+  #characters {
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    align-items: flex-end;
+  }
+  #characters img {
+    width: 120px;
+    height: auto;
+    border-radius: 15px;
+    transition: transform 0.3s ease;
+  }
+  #reaction {
+    margin-top: 15px;
+    height: 100px;
+  }
   #win-message {
     margin-top: 30px;
     font-size: 24px;
     color: #d4005f;
     display: none;
-  }
-  #reaction {
-    margin-top: 20px;
-    width: 320px;
-    height: 180px;
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  #reaction img {
-    position: absolute;
-    max-height: 100%;
-    border-radius: 15px;
-    opacity: 0;
-    transition: opacity 0.6s ease;
-  }
-  #yasmin {
-    left: 10px;
-    width: 140px;
-    z-index: 2;
-  }
-  #namorado {
-    right: 10px;
-    width: 140px;
-    z-index: 1;
-  }
-
-  /* Animação de beijinho - balançar leve */
-  @keyframes beijinho {
-    0%, 100% { transform: translateX(0); opacity: 1; }
-    50% { transform: translateX(15px); opacity: 0.8; }
-  }
-  /* Animação de batidinha - vai e volta rápido */
-  @keyframes batidinha {
-    0%, 100% { transform: translateX(0); opacity: 1; }
-    25% { transform: translateX(-10px); }
-    50% { transform: translateX(10px); }
-    75% { transform: translateX(-10px); }
-  }
-
-  /* Classe para ativar animação beijinho */
-  .beijinho {
-    animation: beijinho 1.2s ease forwards;
-    opacity: 1 !important;
-  }
-  /* Classe para ativar animação batidinha */
-  .batidinha {
-    animation: batidinha 1.2s ease forwards;
-    opacity: 1 !important;
   }
 </style>
 </head>
@@ -130,12 +95,14 @@
 
 <h1>Jogo da Memória</h1>
 <div id="game-board"></div>
-<div id="win-message">Você ganhou! ❤️</div>
 
-<div id="reaction">
-  <img id="yasmin" src="" alt="Yasmin" />
-  <img id="namorado" src="" alt="Namorado" />
+<div id="characters">
+  <img id="yasmin" src="imagens/yasmin-emocao1.png" alt="Yasmin" />
+  <img id="namorado" src="imagens/namorado-emocao1.png" alt="Namorado" />
 </div>
+
+<div id="reaction"></div>
+<div id="win-message">Você ganhou! ❤️</div>
 
 <script>
   const images = [
@@ -149,8 +116,9 @@
 
   const gameBoard = document.getElementById('game-board');
   const winMessage = document.getElementById('win-message');
-  const yasminImg = document.getElementById('yasmin');
-  const namoradoImg = document.getElementById('namorado');
+  const yasmin = document.getElementById('yasmin');
+  const namorado = document.getElementById('namorado');
+  const reaction = document.getElementById('reaction');
 
   let cards = [];
   let flippedCards = [];
@@ -169,7 +137,7 @@
     const doubleImages = images.concat(images);
     shuffle(doubleImages);
     
-    doubleImages.forEach((src) => {
+    doubleImages.forEach(src => {
       const card = document.createElement('div');
       card.classList.add('card');
       card.dataset.image = src;
@@ -184,6 +152,7 @@
       cardBack.classList.add('card-back');
       const img = document.createElement('img');
       img.src = src;
+      img.alt = 'Imagem do jogo';
       cardBack.appendChild(img);
 
       cardInner.appendChild(cardFront);
@@ -191,74 +160,68 @@
       card.appendChild(cardInner);
 
       card.addEventListener('click', () => flipCard(card));
+
       gameBoard.appendChild(card);
+      cards.push(card);
     });
   }
 
   function flipCard(card) {
-    if (lockBoard || card.classList.contains('flipped') || flippedCards.length === 2) return;
+    if(lockBoard) return;
+    if(flippedCards.includes(card)) return;
 
     card.classList.add('flipped');
     flippedCards.push(card);
 
-    if (flippedCards.length === 2) {
+    if(flippedCards.length === 2) {
       checkMatch();
     }
   }
 
-  function checkMatch() {
-    const [card1, card2] = flippedCards;
-    const isMatch = card1.dataset.image === card2.dataset.image;
-    lockBoard = true;
+  function showReaction(imageName) {
+    reaction.innerHTML = '';
+    const img = document.createElement('img');
+    img.src = `imagens/${imageName}`;
+    img.alt = 'Reação';
+    img.style.width = '100px';
+    reaction.appendChild(img);
+  }
 
-    if (isMatch) {
-      showReaction('acertou');
-      matchedCount++;
+  function checkMatch() {
+    lockBoard = true;
+    const [card1, card2] = flippedCards;
+    if(card1.dataset.image === card2.dataset.image) {
+      matchedCount += 2;
       flippedCards = [];
       lockBoard = false;
+      showReaction('acertou.png');
 
-      if (matchedCount === images.length) {
+      // Personagens felizes
+      yasmin.src = 'imagens/yasmin-emocao2.png';
+      namorado.src = 'imagens/namorado-emocao2.png';
+
+      if(matchedCount === cards.length) {
         winMessage.style.display = 'block';
       }
     } else {
-      showReaction('errou');
+      showReaction('errou.png');
+
+      // Personagens tristes
+      yasmin.src = 'imagens/yasmin-emocao1.png';
+      namorado.src = 'imagens/namorado-emocao1.png';
+
       setTimeout(() => {
         card1.classList.remove('flipped');
         card2.classList.remove('flipped');
         flippedCards = [];
         lockBoard = false;
-      }, 1000);
+        reaction.innerHTML = '';
+      }, 1200);
     }
   }
 
-  function showReaction(type) {
-    if(type === 'acertou') {
-      // Yasmin beijinho, namorado feliz
-      yasminImg.src = 'imagens/yasmin-emocao1.png';
-      namoradoImg.src = 'imagens/namorado-emocao1.png';
+  createCards();
+</script>
 
-      yasminImg.classList.remove('batidinha');
-      namoradoImg.classList.remove('batidinha');
-      yasminImg.classList.add('beijinho');
-      namoradoImg.classList.add('beijinho');
-
-    } else {
-      // Yasmin batidinha, namorado triste
-      yasminImg.src = 'imagens/yasmin-emocao2.png';
-      namoradoImg.src = 'imagens/namorado-emocao2.png';
-
-      yasminImg.classList.remove('beijinho');
-      namoradoImg.classList.remove('beijinho');
-      yasminImg.classList.add('batidinha');
-      namoradoImg.classList.add('batidinha');
-    }
-
-    // Mostrar imagens
-    yasminImg.style.opacity = '1';
-    namoradoImg.style.opacity = '1';
-
-    // Depois de 1.2s, esconder as imagens e remover classes de animação
-    setTimeout(() => {
-      yasminImg.style.opacity = '0';
-      namoradoImg.style.opacity = '0';
-      yasminImg.classList
+</body>
+  </html>

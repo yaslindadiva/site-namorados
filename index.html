@@ -62,14 +62,24 @@
       background: #ff3366;
     }
 
-    #prosseguir {
+    /* Botão prosseguir igual aos botões musica */
+    #btn-prosseguir {
       margin-top: 30px;
-      width: 200px;
+      padding: 10px 20px;
+      font-size: 1em;
+      border-radius: 10px;
+      border: none;
+      background: #ff6699;
+      color: white;
       cursor: pointer;
-      transition: transform 0.2s;
+      transition: 0.3s;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
     }
 
-    #prosseguir:hover {
+    #btn-prosseguir:hover {
+      background: #ff3366;
       transform: scale(1.05);
     }
   </style>
@@ -102,9 +112,7 @@
     </div>
 
     <!-- Botão Prosseguir -->
-    <img id="prosseguir" src="imagens/botao-prosseguir.png" alt="Prosseguir"
-         onclick="window.location.href='menu.html'"
-         onerror="this.style.display='none'; alert('⚠️ Verifique se a imagem do botão prosseguir está no caminho: imagens/botao-prosseguir.png');" />
+    <button id="btn-prosseguir" onclick="window.location.href='menu.html'">Prosseguir</button>
   </div>
 
   <!-- Áudio -->

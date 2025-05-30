@@ -1,17 +1,71 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <title>Músicas</title>
-  <link rel="stylesheet" href="style.css" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #ffe6f0;
+      padding: 40px;
+      text-align: center;
+    }
+    h1 {
+      color: #d6336c;
+      margin-bottom: 40px;
+    }
+    .musica {
+      margin-bottom: 30px;
+    }
+    audio {
+      margin-top: 10px;
+      width: 300px;
+      outline: none;
+    }
+    button {
+      margin-top: 40px;
+      padding: 10px 20px;
+      font-size: 1em;
+      border-radius: 10px;
+      border: none;
+      background: #ff6699;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #ff4c80;
+    }
+  </style>
 </head>
 <body>
-  <h2>Músicas Especiais</h2>
-  <ul>
-    <li>🎵 Ivy – Frank Ocean <audio controls src="musicas/ivy.mp3"></audio></li>
-    <li>🎵 Kalam Eineh – Sherine <audio controls src="musicas/kalam.mp3"></audio></li>
-    <li>🎵 Aliança – Tribalistas <audio controls src="musicas/alianca.mp3"></audio></li>
-  </ul>
-  <a href="index.html">⬅️ Voltar</a>
+
+  <h1>Músicas para você</h1>
+
+  <div class="musica">
+    <h2>Kalam</h2>
+    <audio controls>
+      <source src="musicas/kalam.pm3" type="audio/mpeg" />
+      Seu navegador não suporta áudio HTML5.
+    </audio>
+  </div>
+
+  <div class="musica">
+    <h2>Ivy</h2>
+    <audio controls>
+      <source src="musicas/ivy.mp3" type="audio/mpeg" />
+      Seu navegador não suporta áudio HTML5.
+    </audio>
+  </div>
+
+  <div class="musica">
+    <h2>Aliança</h2>
+    <audio controls>
+      <source src="musicas/alianca.mp3" type="audio/mpeg" />
+      Seu navegador não suporta áudio HTML5.
+    </audio>
+  </div>
+
+  <button onclick="window.location.href='menu.html'">Voltar ao Menu</button>
+
 </body>
 </html>

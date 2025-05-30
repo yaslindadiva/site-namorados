@@ -1,114 +1,116 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>Feliz Dia dos Namorados</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cartinha ❤️</title>
   <style>
     body {
       margin: 0;
-      padding: 0;
-      background: #ffe6e6;
-      font-family: 'Segoe UI', sans-serif;
+      background-color: #fff0f5;
+      font-family: 'Arial', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
       overflow: hidden;
     }
 
-    .carta {
-      max-width: 600px;
-      margin: 80px auto;
-      padding: 30px;
-      background: white;
-      border-radius: 20px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
-      text-align: center;
-      position: relative;
-      z-index: 2;
-    }
-
-    .carta h1 {
-      color: #d6336c;
-    }
-
-    .carta p {
-      font-size: 1.1em;
-      line-height: 1.6;
-    }
-
-    .botao {
-      margin-top: 30px;
-      padding: 10px 20px;
-      background-color: #d6336c;
-      color: white;
-      border: none;
-      border-radius: 10px;
-      font-size: 1.2em;
+    #envelope {
+      width: 300px;
+      height: auto;
       cursor: pointer;
-      transition: 0.3s;
+      transition: transform 0.6s ease;
     }
 
-    .botao:hover {
-      background-color: #b02557;
+    #carta {
+      max-width: 90%;
+      max-height: 80vh;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      font-size: 18px;
+      color: #d4005f;
+      display: none;
+      white-space: pre-wrap;
+      overflow-y: auto;
+      text-align: justify;
     }
 
-    .coracao {
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background: url('imagens/coracao.png') no-repeat center;
-      background-size: contain;
-      animation: flutuar 6s infinite;
-      z-index: 1;
+    #controles-musica {
+      margin-top: 20px;
+      display: none;
+      gap: 20px;
     }
 
-    @keyframes flutuar {
-      0% {
-        transform: translateY(0) scale(1);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(-100vh) scale(1.5);
-        opacity: 0;
-      }
+    .botao-musica {
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+    }
+
+    #prosseguir {
+      margin-top: 30px;
+      display: none;
+      cursor: pointer;
+      width: 150px;
     }
   </style>
 </head>
 <body>
 
-  <div class="carta">
-    <h1>Feliz Dia dos Namorados, meu amor!</h1>
-    <p>
-      É a primeira vez que comemoro essa data, e quero comemorá-la para sempre com você.<br /><br />
-      Obrigada por ser esse namorado maravilhoso e dedicado. Eu te amo tanto que é até difícil explicar.<br /><br />
-      Você me ilumina todos os dias. Quando estou feliz, você completa minha felicidade, quando estou triste, me faz sorrir com suas mensagens.<br /><br />
-      Você é precioso e muito importante pra mim. É um prazer enorme tê-lo ao meu lado.<br /><br />
-      Me sinto profundamente amada, obrigada por me fazer sentir assim, e por ter tanta paciência comigo.<br /><br />
-      Digo com muito orgulho: eu tenho o melhor namorado do mundo! O mais amável, o mais fofo, o mais lindo, o mais interessante, o mais inteligente, o mais compreensivo, o mais dedicado... the best.<br /><br />
-      Sinto saudades de te abraçar, mas ao mesmo tempo você se faz presente no meu dia a dia, por isso a saudade não me entristece, ela me fortalece.<br /><br />
-      Não sinto a distância como um sacrifício. Jamais. Vejo isso como um ato de amor. Nos amamos tanto que superamos a distância e a saudade juntos.<br /><br />
-      Nunca, jamais, nunquinha esqueça o quanto eu te amo.<br /><br />
-      Não há palavras no mundo capazes de mensurar esse amor extraordinário que sinto por você. ❤️
-    </p>
-    <button class="botao" onclick="irParaHome()">Prosseguir</button>
+  <img id="envelope" src="imagens/envelope-fechado.png" alt="Envelope fechado" />
+
+  <div id="carta">
+    Feliz Dia dos Namorados, meu amor!<br><br>
+    É a primeira vez que comemoro essa data, e quero comemorá-la para sempre com você.<br><br>
+    Obrigada por ser esse namorado maravilhoso e dedicado. Eu te amo tanto que é até difícil explicar.<br><br>
+    Você me ilumina todos os dias. Quando estou feliz, você completa minha felicidade, quando estou triste, me faz sorrir com suas mensagens.<br><br>
+    Você é precioso e muito importante pra mim. É um prazer enorme tê-lo ao meu lado.<br><br>
+    Me sinto profundamente amada, obrigada por me fazer sentir assim, e por ter tanta paciência comigo.<br><br>
+    Digo com muito orgulho: eu tenho o melhor namorado do mundo! O mais amável, o mais fofo, o mais lindo, o mais interessante, o mais inteligente, o mais compreensivo, o mais dedicado... the best.<br><br>
+    Sinto saudades de te abraçar, mas ao mesmo tempo você se faz presente no meu dia a dia, por isso a saudade não me entristece, ela me fortalece.<br><br>
+    Não sinto a distância como um sacrifício. Jamais. Vejo isso como um ato de amor. Nos amamos tanto que superamos a distância e a saudade juntos.<br><br>
+    Nunca, jamais, nunquinha esqueça o quanto eu te amo.<br><br>
+    Não há palavras no mundo capazes de mensurar esse amor extraordinário que sinto por você. ❤️
   </div>
 
-  <!-- Corações flutuando -->
+  <div id="controles-musica">
+    <img src="imagens/botao-play.png" alt="Play" class="botao-musica" onclick="playMusic()" />
+    <img src="imagens/botao-pause.png" alt="Pause" class="botao-musica" onclick="pauseMusic()" />
+  </div>
+
+  <img id="prosseguir" src="imagens/botao-prosseguir.png" alt="Prosseguir" onclick="window.location.href='menu.html'" />
+
+  <audio id="musica" src="audio/ainda-bem.mp3" preload="auto"></audio>
+
   <script>
-    function criarCoracoes() {
-      for (let i = 0; i < 15; i++) {
-        const coracao = document.createElement("div");
-        coracao.classList.add("coracao");
-        coracao.style.left = `${Math.random() * 100}%`;
-        coracao.style.top = `${Math.random() * 100 + 100}px`;
-        coracao.style.animationDuration = `${Math.random() * 3 + 3}s`;
-        document.body.appendChild(coracao);
-      }
+    const envelope = document.getElementById('envelope');
+    const carta = document.getElementById('carta');
+    const musica = document.getElementById('musica');
+    const controles = document.getElementById('controles-musica');
+    const prosseguir = document.getElementById('prosseguir');
+
+    envelope.addEventListener('click', () => {
+      envelope.src = 'imagens/envelope-aberto.png';
+      setTimeout(() => {
+        envelope.style.display = 'none';
+        carta.style.display = 'block';
+        controles.style.display = 'flex';
+        prosseguir.style.display = 'block';
+        musica.play();
+      }, 1000); // Tempo da animação do envelope
+    });
+
+    function playMusic() {
+      musica.play();
     }
 
-    criarCoracoes();
-
-    function irParaHome() {
-      window.location.href = "home/menu.html";
+    function pauseMusic() {
+      musica.pause();
     }
   </script>
-
 </body>
 </html>

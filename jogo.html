@@ -23,26 +23,21 @@
     grid-template-columns: repeat(4, 1fr);
     gap: 12px;
     margin-top: 30px;
-    position: relative;
-    z-index: 1; /* cartas têm z-index baixo */
+    z-index: 1;
   }
   .card {
-    background: #ff9ccf;
-    border-radius: 15px;
-    cursor: pointer;
     position: relative;
     width: 100%;
     padding-top: 100%; /* quadrado */
+    cursor: pointer;
     perspective: 1000px;
-    z-index: 1; /* cartas padrão */
   }
   .card-inner {
     position: absolute;
-    width: 100%;
-    height: 100%;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: 15px;
     transition: transform 0.5s;
     transform-style: preserve-3d;
-    border-radius: 15px;
   }
   .card.flipped .card-inner {
     transform: rotateY(180deg);
@@ -56,44 +51,42 @@
     backface-visibility: hidden;
   }
   .card-front {
-    background: #ff9ccf url('imagens/verso-carta.png') center center no-repeat;
-    background-size: 50%;
+    background: url('imagens/verso-carta.png') center center no-repeat;
+    background-size: contain;
+    background-color: #ff9ccf;
   }
   .card-back {
     background: white;
+    transform: rotateY(180deg);
     display: flex;
     justify-content: center;
     align-items: center;
-    transform: rotateY(180deg);
   }
   .card-back img {
     max-width: 80%;
     max-height: 80%;
     border-radius: 10px;
   }
-  #characters {
-    position: relative;
-    z-index: 10; /* personagens na frente das cartas */
-    margin-top: 20px;
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-  }
-  #characters img {
-    max-width: 100px;
-    border-radius: 10px;
-  }
-  #reaction {
-    margin-top: 15px;
-    font-size: 28px;
-    text-align: center;
-    color: #d4005f;
-  }
   #win-message {
     margin-top: 30px;
     font-size: 24px;
     color: #d4005f;
     display: none;
+  }
+  #characters {
+    margin-top: 40px;
+    width: 480px;
+    max-width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    z-index: 0;
+  }
+  #characters img {
+    width: 120px;
+    height: auto;
+    border-radius: 15px;
+    transition: transform 0.3s;
   }
 </style>
 </head>
@@ -103,14 +96,12 @@
 
 <div id="game-board"></div>
 
+<div id="win-message">Você ganhou! ❤️</div>
+
 <div id="characters">
   <img id="yasmin" src="imagens/yasmin-emocao1.png" alt="Yasmin" />
   <img id="namorado" src="imagens/namorado-emocao1.png" alt="Namorado" />
 </div>
-
-<div id="reaction"></div>
-
-<div id="win-message">Você ganhou! ❤️</div>
 
 <script>
   const images = [
@@ -124,7 +115,6 @@
 
   const gameBoard = document.getElementById('game-board');
   const winMessage = document.getElementById('win-message');
-  const reaction = document.getElementById('reaction');
   const yasmin = document.getElementById('yasmin');
   const namorado = document.getElementById('namorado');
 
@@ -145,7 +135,7 @@
     const doubleImages = images.concat(images);
     shuffle(doubleImages);
     
-    doubleImages.forEach((src, index) => {
+    doubleImages.forEach((src) => {
       const card = document.createElement('div');
       card.classList.add('card');
       card.dataset.image = src;
@@ -178,11 +168,6 @@
     if(lockBoard) return;
     if(flippedCards.includes(card)) return;
 
-    // Resetar z-index de todas as cartas para 1 (padrão)
-    cards.forEach(c => c.style.zIndex = '1');
-    // Aumentar z-index da carta virada para ficar na frente
-    card.style.zIndex = '100';
-
     card.classList.add('flipped');
     flippedCards.push(card);
 
@@ -194,50 +179,37 @@
   function checkMatch() {
     lockBoard = true;
     const [card1, card2] = flippedCards;
+
     if(card1.dataset.image === card2.dataset.image) {
       matchedCount += 2;
-      reactionAcertou();
       flippedCards = [];
       lockBoard = false;
+
+      yasmin.src = 'imagens/acertou.png';
+      namorado.src = 'imagens/acertou.png';
+
+      setTimeout(() => {
+        yasmin.src = 'imagens/yasmin-emocao1.png';
+        namorado.src = 'imagens/namorado-emocao1.png';
+      }, 1500);
 
       if(matchedCount === cards.length) {
         winMessage.style.display = 'block';
       }
     } else {
-      reactionErrou();
+      yasmin.src = 'imagens/errou.png';
+      namorado.src = 'imagens/errou.png';
+
       setTimeout(() => {
         card1.classList.remove('flipped');
         card2.classList.remove('flipped');
-        // Resetar z-index das cartas que voltaram
-        card1.style.zIndex = '1';
-        card2.style.zIndex = '1';
-
         flippedCards = [];
         lockBoard = false;
+
+        yasmin.src = 'imagens/yasmin-emocao1.png';
+        namorado.src = 'imagens/namorado-emocao1.png';
       }, 1200);
     }
-  }
-
-  function reactionAcertou() {
-    reaction.textContent = '😍 Yasmin deu um beijinho!';
-    yasmin.src = 'imagens/acertou.png';
-    namorado.src = 'imagens/acertou.png';
-    setTimeout(() => {
-      reaction.textContent = '';
-      yasmin.src = 'imagens/yasmin-emocao1.png';
-      namorado.src = 'imagens/namorado-emocao1.png';
-    }, 1500);
-  }
-
-  function reactionErrou() {
-    reaction.textContent = '😅 Yasmin bateu no namorado!';
-    yasmin.src = 'imagens/errou.png';
-    namorado.src = 'imagens/errou.png';
-    setTimeout(() => {
-      reaction.textContent = '';
-      yasmin.src = 'imagens/yasmin-emocao1.png';
-      namorado.src = 'imagens/namorado-emocao1.png';
-    }, 1500);
   }
 
   createCards();

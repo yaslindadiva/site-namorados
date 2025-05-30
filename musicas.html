@@ -2,83 +2,53 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Músicas</title>
   <style>
     body {
-      font-family: 'Arial', sans-serif;
-      background-color: #fff0f5;
-      color: #333;
+      font-family: Arial, sans-serif;
+      background-color: #ffeef2;
       text-align: center;
-      padding: 40px;
+      padding: 30px;
     }
-
     h1 {
-      color: #d63384;
+      color: #d6336c;
+      font-size: 2.5rem;
     }
-
     .player {
-      margin: 20px auto;
-      padding: 20px;
-      border: 2px solid #f8c6d8;
-      border-radius: 20px;
-      background-color: #ffe6f0;
-      width: 300px;
+      margin: 25px 0;
     }
-
-    .player h2 {
-      margin-bottom: 10px;
-    }
-
-    audio {
-      width: 100%;
-      outline: none;
-    }
-
-    .btn-linka {
-      margin-top: 40px;
-      display: inline-block;
-      padding: 12px 24px;
-      background-color: #d63384;
-      color: white;
-      text-decoration: none;
-      border-radius: 10px;
-      font-weight: bold;
-      transition: background-color 0.3s;
-    }
-
-    .btn-linka:hover {
-      background-color: #b82e6e;
+    h3 {
+      color: #a3004f;
     }
   </style>
 </head>
 <body>
-  <h1>💖 Nossa trilha sonora 💖</h1>
+  <h1>Nossas Músicas 💗</h1>
 
   <div class="player">
-    <h2>Kalam</h2>
+    <h3>Ivy</h3>
     <audio controls>
-      <source src="audio/kalam.mp3" type="audio/mpeg">
+      <source src="musicas/ivy.mp3" type="audio/mpeg" />
       Seu navegador não suporta áudio.
     </audio>
   </div>
 
   <div class="player">
-    <h2>Ivy</h2>
+    <h3>Aliança</h3>
     <audio controls>
-      <source src="audio/ivy.mp3" type="audio/mpeg">
+      <source src="musicas/alianca.mp3" type="audio/mpeg" />
       Seu navegador não suporta áudio.
     </audio>
   </div>
 
   <div class="player">
-    <h2>Aliança</h2>
+    <h3>Kalam</h3>
     <audio controls>
-      <source src="audio/alianca.mp3" type="audio/mpeg">
+      <source src="musicas/kalam.mp3" type="audio/mpeg" />
       Seu navegador não suporta áudio.
     </audio>
   </div>
 
-  <a class="btn-linka" href="linha-do-tempo.html">🕰️ Ver nossa Linha do Tempo</a>
 </body>
 </html>

@@ -1,7 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<!DOCTYPE html>
-<html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <title>Feliz Dia dos Namorados</title>
@@ -104,7 +102,9 @@
     </div>
 
     <!-- Botão Prosseguir -->
-    <img id="prosseguir" src="imagens/botao-prosseguir.png" alt="Prosseguir" onclick="window.location.href='menu.html'" onerror="this.style.display='none'; alert('⚠️ Verifique se a imagem do botão prosseguir está no caminho: imagens/botao-prosseguir.png');" />
+    <img id="prosseguir" src="imagens/botao-prosseguir.png" alt="Prosseguir"
+         onclick="window.location.href='menu.html'"
+         onerror="this.style.display='none'; alert('⚠️ Verifique se a imagem do botão prosseguir está no caminho: imagens/botao-prosseguir.png');" />
   </div>
 
   <!-- Áudio -->
@@ -120,7 +120,10 @@
     }
 
     function tocarMusica() {
-      document.getElementById('musica').play();
+      const audio = document.getElementById('musica');
+      audio.play().catch(e => {
+        console.warn("🔇 Erro ao tentar tocar a música:", e);
+      });
     }
 
     function pausarMusica() {

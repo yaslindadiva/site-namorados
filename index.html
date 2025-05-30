@@ -2,22 +2,140 @@
 <html lang="pt-br">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Feliz Dia dos Namorados</title>
-  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #ffe6ec;
+      font-family: 'Great Vibes', cursive;
+      overflow: hidden;
+    }
+
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: red;
+      transform: rotate(45deg);
+      animation: floatUp 6s linear infinite;
+    }
+
+    .heart::before,
+    .heart::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: red;
+      border-radius: 50%;
+    }
+
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: -10px;
+      top: 0;
+    }
+
+    @keyframes floatUp {
+      0% {
+        bottom: -50px;
+        opacity: 1;
+      }
+      100% {
+        bottom: 100%;
+        opacity: 0;
+      }
+    }
+
+    .envelope {
+      width: 300px;
+      height: 200px;
+      background: #fff;
+      border: 2px solid #d6336c;
+      margin: 100px auto;
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .flap {
+      position: absolute;
+      top: -100px;
+      left: 0;
+      width: 300px;
+      height: 100px;
+      background: #d6336c;
+      clip-path: polygon(0 100%, 50% 0, 100% 100%);
+      transition: top 0.5s ease;
+    }
+
+    .message {
+      display: none;
+      margin: 40px auto;
+      padding: 20px;
+      width: 80%;
+      background: white;
+      border-radius: 10px;
+      border: 2px solid #d6336c;
+      color: #d6336c;
+      font-size: 20px;
+      text-align: center;
+    }
+
+    .show .flap {
+      top: -150px;
+    }
+
+    .show .message {
+      display: block;
+    }
+  </style>
 </head>
 <body>
-  <audio autoplay loop>
-    <source src="musicas/ainda-bem.mp3" type="audio/mpeg" />
-  </audio>
-  <div class="container">
-    <h1>💘 Para o meu amor 💘</h1>
-    <p>Espero que goste, meu amor. Eu te amo muito muito muito mesmo!</p>
-    <div class="buttons">
-      <a href="jogo.html">🎮 Jogo da Memória</a>
-      <a href="musicas.html">🎵 Músicas</a>
-      <a href="linha-do-tempo.html">🕰️ Linha do Tempo</a>
-    </div>
-  </div>
+
+<audio autoplay loop>
+  <source src="musicas/ainda-bem.mp3" type="audio/mp3">
+</audio>
+
+<!-- Corações flutuando -->
+<script>
+  function createHeart() {
+    const heart = document.createElement('div');
+    heart.className = 'heart';
+    heart.style.left = Math.random() * 100 + 'vw';
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 6000);
+  }
+
+  setInterval(createHeart, 300);
+</script>
+
+<div class="envelope" onclick="document.body.classList.toggle('show')">
+  <div class="flap"></div>
+</div>
+
+<div class="message">
+  <p>
+    Feliz Dia dos Namorados, meu amor!<br><br>
+    É a primeira vez que comemoro essa data, e quero comemorá-la para sempre com você.<br><br>
+    Obrigada por ser esse namorado maravilhoso e dedicado. Eu te amo tanto que é até difícil explicar.<br><br>
+    Você me ilumina todos os dias. Quando estou feliz, você completa minha felicidade, quando estou triste, me faz sorrir com suas mensagens.<br><br>
+    Você é precioso e muito importante pra mim. É um prazer enorme tê-lo ao meu lado.<br><br>
+    Me sinto profundamente amada, obrigada por me fazer sentir assim, e por ter tanta paciência comigo.<br><br>
+    Digo com muito orgulho: eu tenho o melhor namorado do mundo! O mais amável, o mais fofo, o mais lindo, o mais interessante, o mais inteligente, o mais compreensivo, o mais dedicado... the best.<br><br>
+    Sinto saudades de te abraçar, mas ao mesmo tempo você se faz presente no meu dia a dia, por isso a saudade não me entristece, ela me fortalece.<br><br>
+    Não sinto a distância como um sacrifício. Jamais. Vejo isso como um ato de amor. Nos amamos tanto que superamos a distância e a saudade juntos.<br><br>
+    Nunca, jamais, nunquinha esqueça o quanto eu te amo.<br><br>
+    Não há palavras no mundo capazes de mensurar esse amor extraordinário que sinto por você. ❤️
+  </p>
+</div>
+
 </body>
 </html>

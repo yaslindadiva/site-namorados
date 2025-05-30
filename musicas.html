@@ -15,15 +15,19 @@
       margin-bottom: 40px;
     }
     .musica {
-      margin-bottom: 30px;
+      margin-bottom: 40px;
     }
-    audio {
-      margin-top: 10px;
-      width: 300px;
-      outline: none;
+    .musica h2 {
+      margin-bottom: 10px;
+      color: #c4215d;
+    }
+    .audio-controls {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
     }
     button {
-      margin-top: 40px;
       padding: 10px 20px;
       font-size: 1em;
       border-radius: 10px;
@@ -35,6 +39,9 @@
     button:hover {
       background: #ff4c80;
     }
+    audio {
+      display: none; /* Esconde o player nativo */
+    }
   </style>
 </head>
 <body>
@@ -43,29 +50,57 @@
 
   <div class="musica">
     <h2>Kalam</h2>
-    <audio controls>
-      <source src="musicas/kalam.pm3" type="audio/mpeg" />
-      Seu navegador não suporta áudio HTML5.
-    </audio>
+    <div class="audio-controls">
+      <button onclick="togglePlayPause('audio1', this)">Play</button>
+    </div>
+    <audio id="audio1" src="musicas/kalam.mp3"></audio>
   </div>
 
   <div class="musica">
     <h2>Ivy</h2>
-    <audio controls>
-      <source src="musicas/ivy.mp3" type="audio/mpeg" />
-      Seu navegador não suporta áudio HTML5.
-    </audio>
+    <div class="audio-controls">
+      <button onclick="togglePlayPause('audio2', this)">Play</button>
+    </div>
+    <audio id="audio2" src="musicas/ivy.mp3"></audio>
   </div>
 
   <div class="musica">
     <h2>Aliança</h2>
-    <audio controls>
-      <source src="musicas/alianca.mp3" type="audio/mpeg" />
-      Seu navegador não suporta áudio HTML5.
-    </audio>
+    <div class="audio-controls">
+      <button onclick="togglePlayPause('audio3', this)">Play</button>
+    </div>
+    <audio id="audio3" src="musicas/alianca.mp3"></audio>
   </div>
 
   <button onclick="window.location.href='menu.html'">Voltar ao Menu</button>
+
+  <script>
+    function togglePlayPause(audioId, btn) {
+      const audio = document.getElementById(audioId);
+
+      // Pausa todos os outros
+      document.querySelectorAll('audio').forEach((a) => {
+        if (a.id !== audioId) {
+          a.pause();
+          const b = document.querySelector(`button[onclick*="${a.id}"]`);
+          if (b) b.textContent = 'Play';
+        }
+      });
+
+      if (audio.paused) {
+        audio.play();
+        btn.textContent = 'Pause';
+      } else {
+        audio.pause();
+        btn.textContent = 'Play';
+      }
+
+      // Quando a música acabar, volta o botão pra "Play"
+      audio.onended = () => {
+        btn.textContent = 'Play';
+      };
+    }
+  </script>
 
 </body>
 </html>

@@ -1,141 +1,114 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
   <title>Feliz Dia dos Namorados</title>
-  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet"/>
   <style>
     body {
       margin: 0;
       padding: 0;
-      background: #ffe6ec;
-      font-family: 'Great Vibes', cursive;
+      background: #ffe6e6;
+      font-family: 'Segoe UI', sans-serif;
       overflow: hidden;
     }
 
-    .heart {
+    .carta {
+      max-width: 600px;
+      margin: 80px auto;
+      padding: 30px;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      text-align: center;
+      position: relative;
+      z-index: 2;
+    }
+
+    .carta h1 {
+      color: #d6336c;
+    }
+
+    .carta p {
+      font-size: 1.1em;
+      line-height: 1.6;
+    }
+
+    .botao {
+      margin-top: 30px;
+      padding: 10px 20px;
+      background-color: #d6336c;
+      color: white;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.2em;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .botao:hover {
+      background-color: #b02557;
+    }
+
+    .coracao {
       position: absolute;
       width: 20px;
       height: 20px;
-      background-color: red;
-      transform: rotate(45deg);
-      animation: floatUp 6s linear infinite;
+      background: url('imagens/coracao.png') no-repeat center;
+      background-size: contain;
+      animation: flutuar 6s infinite;
+      z-index: 1;
     }
 
-    .heart::before,
-    .heart::after {
-      content: '';
-      position: absolute;
-      width: 20px;
-      height: 20px;
-      background-color: red;
-      border-radius: 50%;
-    }
-
-    .heart::before {
-      top: -10px;
-      left: 0;
-    }
-
-    .heart::after {
-      left: -10px;
-      top: 0;
-    }
-
-    @keyframes floatUp {
+    @keyframes flutuar {
       0% {
-        bottom: -50px;
+        transform: translateY(0) scale(1);
         opacity: 1;
       }
       100% {
-        bottom: 100%;
+        transform: translateY(-100vh) scale(1.5);
         opacity: 0;
       }
-    }
-
-    .envelope {
-      width: 300px;
-      height: 200px;
-      background: #fff;
-      border: 2px solid #d6336c;
-      margin: 100px auto;
-      position: relative;
-      cursor: pointer;
-      transition: transform 0.3s ease;
-    }
-
-    .flap {
-      position: absolute;
-      top: -100px;
-      left: 0;
-      width: 300px;
-      height: 100px;
-      background: #d6336c;
-      clip-path: polygon(0 100%, 50% 0, 100% 100%);
-      transition: top 0.5s ease;
-    }
-
-    .message {
-      display: none;
-      margin: 40px auto;
-      padding: 20px;
-      width: 80%;
-      background: white;
-      border-radius: 10px;
-      border: 2px solid #d6336c;
-      color: #d6336c;
-      font-size: 20px;
-      text-align: center;
-    }
-
-    .show .flap {
-      top: -150px;
-    }
-
-    .show .message {
-      display: block;
     }
   </style>
 </head>
 <body>
 
-<audio autoplay loop>
-  <source src="musicas/ainda-bem.mp3" type="audio/mp3">
-</audio>
+  <div class="carta">
+    <h1>Feliz Dia dos Namorados, meu amor!</h1>
+    <p>
+      É a primeira vez que comemoro essa data, e quero comemorá-la para sempre com você.<br><br>
+      Obrigada por ser esse namorado maravilhoso e dedicado. Eu te amo tanto que é até difícil explicar.<br><br>
+      Você me ilumina todos os dias. Quando estou feliz, você completa minha felicidade, quando estou triste, me faz sorrir com suas mensagens.<br><br>
+      Você é precioso e muito importante pra mim. É um prazer enorme tê-lo ao meu lado.<br><br>
+      Me sinto profundamente amada, obrigada por me fazer sentir assim, e por ter tanta paciência comigo.<br><br>
+      Digo com muito orgulho: eu tenho o melhor namorado do mundo! O mais amável, o mais fofo, o mais lindo, o mais interessante, o mais inteligente, o mais compreensivo, o mais dedicado... the best.<br><br>
+      Sinto saudades de te abraçar, mas ao mesmo tempo você se faz presente no meu dia a dia, por isso a saudade não me entristece, ela me fortalece.<br><br>
+      Não sinto a distância como um sacrifício. Jamais. Vejo isso como um ato de amor. Nos amamos tanto que superamos a distância e a saudade juntos.<br><br>
+      Nunca, jamais, nunquinha esqueça o quanto eu te amo.<br><br>
+      Não há palavras no mundo capazes de mensurar esse amor extraordinário que sinto por você. ❤️
+    </p>
+    <button class="botao" onclick="irParaHome()">Prosseguir</button>
+  </div>
 
-<!-- Corações flutuando -->
-<script>
-  function createHeart() {
-    const heart = document.createElement('div');
-    heart.className = 'heart';
-    heart.style.left = Math.random() * 100 + 'vw';
-    document.body.appendChild(heart);
-    setTimeout(() => heart.remove(), 6000);
-  }
+  <!-- Corações flutuando -->
+  <script>
+    function criarCoracoes() {
+      for (let i = 0; i < 15; i++) {
+        const coracao = document.createElement("div");
+        coracao.classList.add("coracao");
+        coracao.style.left = `${Math.random() * 100}%`;
+        coracao.style.top = `${Math.random() * 100 + 100}px`;
+        coracao.style.animationDuration = `${Math.random() * 3 + 3}s`;
+        document.body.appendChild(coracao);
+      }
+    }
 
-  setInterval(createHeart, 300);
-</script>
+    criarCoracoes();
 
-<div class="envelope" onclick="document.body.classList.toggle('show')">
-  <div class="flap"></div>
-</div>
-
-<div class="message">
-  <p>
-    Feliz Dia dos Namorados, meu amor!<br><br>
-    É a primeira vez que comemoro essa data, e quero comemorá-la para sempre com você.<br><br>
-    Obrigada por ser esse namorado maravilhoso e dedicado. Eu te amo tanto que é até difícil explicar.<br><br>
-    Você me ilumina todos os dias. Quando estou feliz, você completa minha felicidade, quando estou triste, me faz sorrir com suas mensagens.<br><br>
-    Você é precioso e muito importante pra mim. É um prazer enorme tê-lo ao meu lado.<br><br>
-    Me sinto profundamente amada, obrigada por me fazer sentir assim, e por ter tanta paciência comigo.<br><br>
-    Digo com muito orgulho: eu tenho o melhor namorado do mundo! O mais amável, o mais fofo, o mais lindo, o mais interessante, o mais inteligente, o mais compreensivo, o mais dedicado... the best.<br><br>
-    Sinto saudades de te abraçar, mas ao mesmo tempo você se faz presente no meu dia a dia, por isso a saudade não me entristece, ela me fortalece.<br><br>
-    Não sinto a distância como um sacrifício. Jamais. Vejo isso como um ato de amor. Nos amamos tanto que superamos a distância e a saudade juntos.<br><br>
-    Nunca, jamais, nunquinha esqueça o quanto eu te amo.<br><br>
-    Não há palavras no mundo capazes de mensurar esse amor extraordinário que sinto por você. ❤️
-  </p>
-</div>
+    function irParaHome() {
+      window.location.href = "home.html";
+    }
+  </script>
 
 </body>
 </html>
